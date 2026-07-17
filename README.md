@@ -51,6 +51,7 @@ Database SQLite (queuecare.db) akan otomatis dibuat saat pertama kali dijalankan
 
 🔑 Akun Demo
 RoleEmailPasswordAdminadmin@queuecare.comadmin123Pasiendaftar sendiri lewat halaman Register—
+
 📁 Struktur Folder
 
 ├── app.js                     # Entry point & routing utama
