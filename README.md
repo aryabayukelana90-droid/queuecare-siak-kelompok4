@@ -110,7 +110,7 @@ Website sistem antrian klinik dengan tema **pink sakura**. Dibangun dengan Node.
 
 ---
 
-## 📝 Catatan untuk Laporan Tugas RPL
+## 📝 Catatan 
 
 - **Kategori prioritas**: pasien lansia/darurat otomatis didahulukan dalam antrian, sesuai hasil studi kasus yang ditemukan di berbagai puskesmas.
 - **Estimasi waktu tunggu**: dihitung dari jumlah pasien di depan (di poli yang sama) × rata-rata waktu layanan (asumsi 10 menit/pasien, bisa disesuaikan di `controllers/pasienController.js`).
