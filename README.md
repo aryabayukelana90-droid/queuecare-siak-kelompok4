@@ -49,7 +49,6 @@ Website sistem antrian klinik dengan tema **pink sakura**. Dibangun dengan Node.
 2. Buka folder proyek ini di terminal,lalu masukan
       ```bash
       cd queuecare-siak-kelompok4-main
-       ```
 3. lalu install dependencies:
    ```bash
    npm install
