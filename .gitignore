@@ -1,0 +1,5 @@
+node_modules/
+queuecare.db
+queuecare.db-journal
+queuecare.db-wal
+queuecare.db-shm

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'Login - QueueCare' }) %>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare
+        </a>
+    </div>
+</nav>
+
+<div class="auth-wrapper">
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-md-5">
+
+<div class="card shadow auth-card">
+
+<img src="/img/sakura-branch.svg" class="corner-petal" alt="">
+
+<div class="card-body p-4 position-relative">
+
+<h3 class="text-center mb-4">Login QueueCare 🌸</h3>
+
+<% if (typeof registered !== "undefined" && registered) { %>
+    <div class="alert-sakura-success mb-3">Pendaftaran berhasil! Silakan login.</div>
+<% } %>
+
+<% if (typeof error !== "undefined" && error) { %>
+    <div class="alert-sakura-error mb-3"><%= error %></div>
+<% } %>
+
+<form action="/login" method="POST">
+
+<div class="mb-3">
+<label>Email</label>
+<input type="email" name="email" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Password</label>
+<input type="password" name="password" class="form-control" required>
+</div>
+
+<button class="btn btn-primary w-100">Login</button>
+
+</form>
+
+<div class="text-center mt-3">
+    <a href="/register">Belum punya akun? Daftar di sini</a>
+</div>
+
+<div class="text-center mt-2">
+    <small class="text-muted">Demo admin: admin@queuecare.com / admin123</small>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<%- include('partials/petals') %>
+
+</body>
+</html>

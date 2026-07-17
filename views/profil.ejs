@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'Profil Saya - QueueCare' }) %>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand fw-bold">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare
+        </span>
+
+        <div class="d-flex align-items-center gap-2">
+            <a href="/dashboard" class="btn btn-light btn-sm">
+                <i class="bi bi-arrow-left"></i> Dashboard
+            </a>
+            <a href="/logout" class="btn btn-light btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="auth-wrapper">
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow auth-card">
+
+<img src="/img/sakura-branch.svg" class="corner-petal" alt="">
+
+<div class="card-body p-4 position-relative">
+
+<h3 class="text-center mb-4">Profil Saya 🌸</h3>
+
+<% if (error) { %>
+    <div class="alert-sakura-error mb-3"><%= error %></div>
+<% } %>
+<% if (sukses) { %>
+    <div class="alert-sakura-success mb-3"><%= sukses %></div>
+<% } %>
+
+<form action="/profil" method="POST">
+
+    <div class="mb-3">
+        <label>Nama</label>
+        <input type="text" name="nama" class="form-control" value="<%= user.nama %>" required>
+    </div>
+
+    <hr class="my-4">
+    <p class="text-muted small mb-3">Ingin ganti password? Isi bagian di bawah ini. Kosongkan jika tidak ingin mengubah password.</p>
+
+    <div class="mb-3">
+        <label>Password Lama</label>
+        <input type="password" name="passwordLama" class="form-control" placeholder="Kosongkan jika tidak ganti password">
+    </div>
+
+    <div class="mb-3">
+        <label>Password Baru</label>
+        <input type="password" name="passwordBaru" class="form-control" placeholder="Minimal 6 karakter">
+    </div>
+
+    <div class="mb-3">
+        <label>Konfirmasi Password Baru</label>
+        <input type="password" name="konfirmasiPassword" class="form-control">
+    </div>
+
+    <button class="btn btn-primary w-100">Simpan Perubahan</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<%- include('partials/petals') %>
+
+</body>
+</html>

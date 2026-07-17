@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'Dashboard Admin - QueueCare' }) %>
+    <meta http-equiv="refresh" content="8">
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand fw-bold">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare — Admin
+        </span>
+
+        <div class="d-flex align-items-center gap-2">
+            <a href="/display" class="btn btn-light btn-sm" target="_blank">
+                <i class="bi bi-display"></i> Papan Antrian
+            </a>
+            <a href="/admin/riwayat" class="btn btn-light btn-sm">
+                <i class="bi bi-clock-history"></i> Riwayat
+            </a>
+            <a href="/logout" class="btn btn-light btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="mb-0">Dashboard Petugas</h2>
+        <form action="/admin/reset" method="POST"
+              onsubmit="return confirm('Reset semua data antrian? Nomor antrean akan mulai dari 001 lagi. Akun pengguna tidak akan terhapus.');">
+            <button class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-counterclockwise"></i> Reset Antrian
+            </button>
+        </form>
+    </div>
+
+    <!-- Statistik ringkas hari ini -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+                    <h3 class="mb-0"><%= statLengkap.menunggu || 0 %></h3>
+                    <small class="text-muted">Menunggu</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon"><i class="bi bi-megaphone"></i></div>
+                    <h3 class="mb-0"><%= statLengkap.dipanggil || 0 %></h3>
+                    <small class="text-muted">Sedang Dipanggil</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
+                    <h3 class="mb-0"><%= totalSelesai %></h3>
+                    <small class="text-muted">Selesai Hari Ini</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon"><i class="bi bi-skip-forward"></i></div>
+                    <h3 class="mb-0"><%= (statLengkap.dilewati || 0) + (statLengkap.dibatalkan || 0) %></h3>
+                    <small class="text-muted">Dilewati / Dibatalkan</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakdown per poli -->
+    <div class="row g-3 mb-4">
+        <% perPoli.forEach(p => { %>
+        <div class="col-6 col-md-3">
+            <div class="card poli-stat-card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="small text-muted mb-1"><%= daftarPoli[p.poli] ? daftarPoli[p.poli].label : p.poli %></div>
+                    <div class="d-flex justify-content-between">
+                        <span><b><%= p.aktif %></b> aktif</span>
+                        <span class="text-success"><b><%= p.selesaiHariIni %></b> selesai</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+
+    <!-- Filter poli untuk daftar antrean aktif -->
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        <a href="/admin" class="btn btn-sm <%= !poliFilter ? 'btn-primary' : 'btn-outline-secondary' %>">Semua Poli</a>
+        <% Object.keys(daftarPoli).forEach(kode => { %>
+            <a href="/admin?poli=<%= kode %>" class="btn btn-sm <%= poliFilter === kode ? 'btn-primary' : 'btn-outline-secondary' %>">
+                <%= daftarPoli[kode].label %>
+            </a>
+        <% }) %>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered table-hover mb-0">
+
+                <thead class="table-primary">
+                    <tr>
+                        <th>No</th>
+                        <th>Nomor</th>
+                        <th>Nama Pasien</th>
+                        <th>Poli</th>
+                        <th>Kategori</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% if (data.length === 0) { %>
+                        <tr><td colspan="7" class="text-center text-muted py-4">Belum ada antrian aktif 🌸</td></tr>
+                    <% } %>
+
+                    <% data.forEach((item, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><strong><%= item.nomor_antrean %></strong></td>
+                        <td><%= item.nama %></td>
+                        <td><span class="badge-poli"><%= daftarPoli[item.poli] ? daftarPoli[item.poli].label : item.poli %></span></td>
+                        <td>
+                            <span class="<%= item.kategori === 'prioritas' ? 'badge-prioritas' : 'badge-umum' %>">
+                                <%= item.kategori === 'prioritas' ? 'Prioritas' : 'Umum' %>
+                            </span>
+                        </td>
+                        <td>
+                            <% if (item.status === 'Dipanggil') { %>
+                                <span class="badge-status-dipanggil">Dipanggil</span>
+                            <% } else { %>
+                                <span class="badge-status-menunggu">Menunggu</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <% if (item.status !== 'Dipanggil') { %>
+                                    <form action="/admin/panggil/<%= item.id %>" method="POST">
+                                        <button class="btn btn-primary btn-sm">Panggil</button>
+                                    </form>
+                                <% } else { %>
+                                    <form action="/admin/selesai/<%= item.id %>" method="POST">
+                                        <button class="btn btn-success btn-sm">Selesai</button>
+                                    </form>
+                                    <form action="/admin/lewati/<%= item.id %>" method="POST">
+                                        <button class="btn btn-secondary btn-sm">Lewati</button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<%- include('partials/petals') %>
+
+</body>
+</html>

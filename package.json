@@ -1,0 +1,15 @@
+{
+  "name": "queuecare-siak",
+  "version": "1.0.0",
+  "description": "Sistem Antrian Klinik Berbasis Web - QueueCare",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --experimental-sqlite app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  }
+}

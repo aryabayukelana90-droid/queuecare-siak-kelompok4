@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'Papan Antrian - QueueCare' }) %>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand fw-bold">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare — Papan Antrian
+        </span>
+        <span class="text-white small" id="jam-sekarang"></span>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="text-center mb-4">Nomor Sedang Dipanggil</h2>
+
+    <div class="row g-4" id="papan-poli">
+        <% poli.forEach(p => { %>
+        <div class="col-md-6" data-poli="<%= p.kode %>">
+            <div class="card shadow display-card h-100">
+                <div class="card-body text-center">
+                    <h5 class="display-poli-label"><%= p.label %></h5>
+
+                    <div class="display-nomor-wrap">
+                        <% if (p.dipanggil.length > 0) { %>
+                            <% p.dipanggil.forEach(d => { %>
+                                <div class="display-nomor"><%= d.nomor_antrean %></div>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="display-nomor display-nomor-kosong">—</div>
+                        <% } %>
+                    </div>
+
+                    <div class="display-menunggu">
+                        <i class="bi bi-people"></i> <%= p.menunggu %> pasien menunggu
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+
+    <p class="text-center text-muted small mt-4">
+        Halaman ini diperbarui otomatis. Mohon perhatikan nomor Anda dipanggil. 🌸
+    </p>
+
+</div>
+
+<%- include('partials/petals') %>
+
+<script>
+(function () {
+    const jamEl = document.getElementById("jam-sekarang");
+    function tampilkanJam() {
+        jamEl.textContent = new Date().toLocaleString("id-ID", {
+            weekday: "long", day: "2-digit", month: "long", year: "numeric",
+            hour: "2-digit", minute: "2-digit", second: "2-digit"
+        });
+    }
+    tampilkanJam();
+    setInterval(tampilkanJam, 1000);
+
+    function bunyikanChime() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            [660, 880, 1175].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = "sine";
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.001, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.3, ctx.currentTime + i * 0.28 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.28 + 0.26);
+                osc.connect(gain).connect(ctx.destination);
+                osc.start(ctx.currentTime + i * 0.28);
+                osc.stop(ctx.currentTime + i * 0.28 + 0.28);
+            });
+        } catch (e) { /* abaikan jika audio tidak tersedia */ }
+    }
+
+    let nomorTerakhir = {};
+    document.querySelectorAll("#papan-poli [data-poli]").forEach(el => {
+        const nomorEls = el.querySelectorAll(".display-nomor");
+        nomorTerakhir[el.dataset.poli] = Array.from(nomorEls).map(n => n.textContent.trim()).join(",");
+    });
+
+    async function perbarui() {
+        try {
+            const res = await fetch("/display/data");
+            const json = await res.json();
+            let adaPerubahan = false;
+
+            json.poli.forEach(p => {
+                const kartu = document.querySelector(`#papan-poli [data-poli="${p.kode}"]`);
+                if (!kartu) return;
+
+                const nomorBaru = p.dipanggil.length > 0
+                    ? p.dipanggil.map(d => d.nomor_antrean).join(",")
+                    : "";
+
+                if (nomorTerakhir[p.kode] !== nomorBaru) {
+                    adaPerubahan = true;
+                    nomorTerakhir[p.kode] = nomorBaru;
+
+                    const wrap = kartu.querySelector(".display-nomor-wrap");
+                    wrap.innerHTML = "";
+                    if (p.dipanggil.length > 0) {
+                        p.dipanggil.forEach(d => {
+                            const div = document.createElement("div");
+                            div.className = "display-nomor display-flash";
+                            div.textContent = d.nomor_antrean;
+                            wrap.appendChild(div);
+                        });
+                    } else {
+                        const div = document.createElement("div");
+                        div.className = "display-nomor display-nomor-kosong";
+                        div.textContent = "—";
+                        wrap.appendChild(div);
+                    }
+                }
+
+                const menungguEl = kartu.querySelector(".display-menunggu");
+                menungguEl.innerHTML = `<i class="bi bi-people"></i> ${p.menunggu} pasien menunggu`;
+            });
+
+            if (adaPerubahan) bunyikanChime();
+        } catch (e) {
+            // koneksi terputus sementara, coba lagi di polling berikutnya
+        }
+    }
+
+    setInterval(perbarui, 4000);
+})();
+</script>
+
+</body>
+</html>

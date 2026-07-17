@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'QueueCare - Sistem Antrian Klinik' }) %>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare
+        </a>
+
+        <div>
+            <a href="/display" class="btn btn-outline-light me-2">
+                <i class="bi bi-display"></i> Papan Antrian
+            </a>
+            <a href="/login" class="btn btn-light me-2">Login</a>
+            <a href="/register" class="btn btn-warning">Daftar</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-sakura bg-primary bg-opacity-10 position-relative">
+    <img src="/img/sakura-branch.svg" class="hero-branch" alt="">
+    <img src="/img/sakura-branch.svg" class="hero-branch flip" alt="">
+
+    <div class="container text-center py-5 position-relative">
+
+        <h1 class="display-4 fw-bold">
+            Sistem Antrian Klinik Berbasis Web
+        </h1>
+
+        <p class="lead mt-3" style="max-width: 560px; margin-left:auto; margin-right:auto;">
+            Ambil nomor antrean secara online tanpa harus datang lebih awal ke klinik —
+            tenang seperti bunga sakura yang mekar perlahan. 🌸
+        </p>
+
+        <a href="/register" class="btn btn-primary btn-lg mt-3 px-4">
+            Mulai Sekarang
+        </a>
+
+    </div>
+</section>
+
+<div class="container py-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon">📅</div>
+                    <h5>Ambil Antrean</h5>
+                    <p class="text-muted mb-0">Ambil nomor antrean kapan saja, di mana saja.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon">⏱</div>
+                    <h5>Estimasi Waktu</h5>
+                    <p class="text-muted mb-0">Lihat estimasi waktu tunggu secara real-time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon">💻</div>
+                    <h5>Online</h5>
+                    <p class="text-muted mb-0">Dapat diakses kapan saja melalui browser.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon">🏥</div>
+                    <h5>Multi Poli</h5>
+                    <p class="text-muted mb-0">Poli Umum, Gigi, Anak, hingga KIA — antrean terpisah & tertata rapi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon">📺</div>
+                    <h5>Papan Antrian Live</h5>
+                    <p class="text-muted mb-0">Pantau nomor yang sedang dipanggil langsung dari layar ruang tunggu.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="text-center py-4">
+    🌸 © 2026 QueueCare — Sistem Antrian Klinik
+</footer>
+
+<%- include('partials/petals') %>
+
+</body>
+</html>

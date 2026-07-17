@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head', { title: 'Dashboard Pasien - QueueCare' }) %>
+    <% if (antrean && antrean.status === "Menunggu") { %>
+    <meta http-equiv="refresh" content="8">
+    <% } %>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand fw-bold">
+            <img src="/img/sakura-icon.svg" alt="QueueCare">
+            QueueCare
+        </span>
+
+        <div class="d-flex align-items-center gap-2">
+            <a href="/display" class="btn btn-light btn-sm" target="_blank">
+                <i class="bi bi-display"></i> Papan Antrian
+            </a>
+            <a href="/profil" class="btn btn-light btn-sm">
+                <i class="bi bi-person-circle"></i> Profil
+            </a>
+            <a href="/logout" class="btn btn-light btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+
+    <h2>Halo, <b><%= user.nama %></b> 👋</h2>
+
+    <p class="text-muted">
+        Selamat datang di sistem antrean klinik.
+    </p>
+
+    <div class="row mt-4 g-3">
+
+        <div class="col-md-4">
+            <div class="queue-number-box card shadow border-0">
+                <div class="card-body text-center">
+                    <h6>Nomor Antrean</h6>
+                    <h1><%= antrean ? antrean.nomor_antrean : "-" %></h1>
+                    <% if (antrean) { %>
+                        <div class="d-flex justify-content-center gap-2 mt-1">
+                            <span class="<%= antrean.kategori === 'prioritas' ? 'badge-prioritas' : 'badge-umum' %>">
+                                <%= antrean.kategori === 'prioritas' ? 'Prioritas' : 'Umum' %>
+                            </span>
+                            <span class="badge-poli">
+                                <%= daftarPoli[antrean.poli] ? daftarPoli[antrean.poli].label : antrean.poli %>
+                            </span>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h6>Status</h6>
+                    <h4 class="mt-2" style="color: var(--sakura-deep);">
+                        <%= antrean ? antrean.status : "Belum Mengambil" %>
+                    </h4>
+                    <% if (antrean && antrean.status === "Menunggu" && posisi !== null) { %>
+                        <p class="text-muted small mb-0 mt-2">
+                            <%= posisi %> pasien di depan Anda (poli yang sama)
+                        </p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h6>Estimasi Waktu Tunggu</h6>
+                    <h4 class="mt-2" style="color: var(--sakura-deep);">
+                        <% if (antrean && antrean.status === "Menunggu" && estimasi !== null) { %>
+                            ± <%= estimasi %> menit
+                        <% } else if (antrean && antrean.status === "Dipanggil") { %>
+                            Sekarang giliran Anda!
+                        <% } else { %>
+                            -
+                        <% } %>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-5">
+
+        <% if (!antrean || antrean.status === "Dilewati" || antrean.status === "Selesai" || antrean.status === "Dibatalkan") { %>
+
+        <form action="/ambil-antrean" method="POST" class="card shadow-sm p-4 mx-auto text-start" style="max-width: 460px;">
+            <% if (antrean && antrean.status === "Selesai") { %>
+                <p class="text-muted text-center mb-3">Terima kasih atas kunjungan Anda 🌸<br>Ingin ambil antrean baru untuk kunjungan berikutnya?</p>
+            <% } else if (antrean && antrean.status === "Dibatalkan") { %>
+                <p class="text-muted text-center mb-3">Antrean sebelumnya sudah dibatalkan. Silakan ambil nomor baru jika diperlukan.</p>
+            <% } %>
+
+            <label class="mb-2">Pilih Poli / Layanan</label>
+            <div class="row g-2 mb-3">
+                <% Object.keys(daftarPoli).forEach((kode, i) => { %>
+                <div class="col-6">
+                    <label class="poli-option d-flex align-items-center gap-2">
+                        <input type="radio" name="poli" value="<%= kode %>" <%= i === 0 ? 'checked' : '' %>>
+                        <%= daftarPoli[kode].label %>
+                    </label>
+                </div>
+                <% }) %>
+            </div>
+
+            <label class="mb-2">Pilih Kategori</label>
+            <div class="d-flex justify-content-center gap-4 mb-3">
+                <label class="d-flex align-items-center gap-2">
+                    <input type="radio" name="kategori" value="umum" checked> Umum
+                </label>
+                <label class="d-flex align-items-center gap-2">
+                    <input type="radio" name="kategori" value="prioritas"> Prioritas (Lansia/Darurat)
+                </label>
+            </div>
+            <button class="btn btn-success btn-lg">
+                <i class="bi bi-ticket-perforated"></i>
+                Ambil Antrean
+            </button>
+        </form>
+
+        <% } else if (antrean.status === "Dipanggil") { %>
+            <div class="alert-sakura-success d-inline-block px-4">
+                🌸 Silakan menuju loket, nomor Anda sedang dipanggil!
+            </div>
+        <% } else if (antrean.status === "Menunggu") { %>
+            <form action="/batalkan-antrean/<%= antrean.id %>" method="POST"
+                  onsubmit="return confirm('Batalkan antrean nomor ' + '<%= antrean.nomor_antrean %>' + '?');">
+                <button class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-x-circle"></i> Batalkan Antrean
+                </button>
+            </form>
+        <% } %>
+
+    </div>
+
+    <% if (riwayat && riwayat.length > 0) { %>
+    <div class="mt-5">
+        <h5 class="mb-3">Riwayat Kunjungan</h5>
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Poli</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% riwayat.forEach(r => { %>
+                        <tr>
+                            <td><strong><%= r.nomor_antrean %></strong></td>
+                            <td><%= daftarPoli[r.poli] ? daftarPoli[r.poli].label : r.poli %></td>
+                            <td><%= r.tanggal %></td>
+                            <td>
+                                <% if (r.status === 'Selesai') { %>
+                                    <span class="badge-status-selesai">Selesai</span>
+                                <% } else if (r.status === 'Dibatalkan') { %>
+                                    <span class="badge-status-batal">Dibatalkan</span>
+                                <% } else { %>
+                                    <span class="badge-status-batal">Dilewati</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+</div>
+
+<%- include('partials/petals') %>
+
+<script>
+(function () {
+    // Notifikasi otomatis saat nomor pasien dipanggil: bunyi chime + browser notification.
+    // Memakai sessionStorage supaya notifikasi hanya berbunyi sekali per perubahan status,
+    // walaupun halaman ini reload otomatis setiap 8 detik.
+    const statusSekarang = "<%= antrean ? antrean.status : '' %>";
+    const idAntreanSekarang = "<%= antrean ? antrean.id : '' %>";
+    const kunci = "queuecare_notif_" + idAntreanSekarang;
+
+    if (statusSekarang === "Dipanggil" && sessionStorage.getItem(kunci) !== "1") {
+        sessionStorage.setItem(kunci, "1");
+
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            [880, 1175].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = "sine";
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.001, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + i * 0.35 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.35 + 0.32);
+                osc.connect(gain).connect(ctx.destination);
+                osc.start(ctx.currentTime + i * 0.35);
+                osc.stop(ctx.currentTime + i * 0.35 + 0.35);
+            });
+        } catch (e) { /* audio tidak tersedia, abaikan */ }
+
+        if ("Notification" in window) {
+            if (Notification.permission === "granted") {
+                new Notification("QueueCare 🌸", { body: "Nomor Anda sedang dipanggil, silakan menuju loket." });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+    }
+})();
+</script>
+
+</body>
+</html>

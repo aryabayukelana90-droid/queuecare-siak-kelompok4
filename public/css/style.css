@@ -1,0 +1,383 @@
+/* ============================================
+   QUEUECARE — Tema Pink Sakura
+   ============================================ */
+
+:root {
+  --sakura-pale:   #FDF2F5;
+  --sakura-light:  #F9DCE4;
+  --sakura-mid:    #F4A6BC;
+  --sakura-deep:   #E8748F;
+  --sakura-dark:   #B23A5D;
+  --sakura-ink:    #4A2C35;
+  --sakura-gold:   #E3B873;
+  --sakura-sage:   #8FAE8B;
+  --sakura-sage-dark: #5C7D58;
+  --line-soft:     #F0D8DF;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Quicksand', -apple-system, sans-serif;
+  background: linear-gradient(180deg, var(--sakura-pale) 0%, #FFFFFF 340px);
+  color: var(--sakura-ink);
+  position: relative;
+}
+
+h1, h2, h3, h4, h5, .display-4, .navbar-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: var(--sakura-dark);
+}
+
+a { color: var(--sakura-deep); }
+a:hover { color: var(--sakura-dark); }
+
+/* ---------- Navbar ---------- */
+.navbar.bg-primary, nav.bg-primary {
+  background: linear-gradient(90deg, var(--sakura-deep), var(--sakura-mid)) !important;
+  box-shadow: 0 2px 12px rgba(178, 58, 93, 0.18);
+}
+.navbar-brand {
+  color: #fff !important;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.navbar-brand img { height: 30px; width: 30px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  border-radius: 999px;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary, .btn-light {
+  background: var(--sakura-deep) !important;
+  border-color: var(--sakura-deep) !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .btn-light:hover {
+  background: var(--sakura-dark) !important;
+  border-color: var(--sakura-dark) !important;
+  color: #fff !important;
+}
+a.btn-light { color: var(--sakura-deep) !important; background: #fff !important; border-color: #fff !important; }
+a.btn-light:hover { color: #fff !important; background: var(--sakura-dark) !important; }
+
+.btn-warning {
+  background: var(--sakura-gold) !important;
+  border-color: var(--sakura-gold) !important;
+  color: #fff !important;
+}
+.btn-warning:hover { background: #cf9e56 !important; border-color: #cf9e56 !important; color: #fff !important; }
+
+.btn-success {
+  background: var(--sakura-sage) !important;
+  border-color: var(--sakura-sage) !important;
+  color: #fff !important;
+}
+.btn-success:hover { background: var(--sakura-sage-dark) !important; border-color: var(--sakura-sage-dark) !important; }
+
+.btn-outline-secondary, .btn-secondary {
+  background: #fff !important;
+  border-color: var(--line-soft) !important;
+  color: var(--sakura-dark) !important;
+}
+.btn-outline-secondary:hover, .btn-secondary:hover {
+  background: var(--sakura-pale) !important;
+  border-color: var(--sakura-mid) !important;
+}
+
+.btn-danger {
+  background: #D9667C !important;
+  border-color: #D9667C !important;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  border: 1px solid var(--line-soft);
+  border-radius: 16px !important;
+  box-shadow: 0 2px 6px rgba(178, 58, 93, 0.06), 0 10px 26px rgba(178, 58, 93, 0.08) !important;
+}
+.card:hover { box-shadow: 0 4px 10px rgba(178, 58, 93, 0.10), 0 14px 30px rgba(178, 58, 93, 0.12) !important; }
+
+/* ---------- Forms ---------- */
+.form-control {
+  border-radius: 10px;
+  border: 1.5px solid var(--line-soft);
+  padding: 10px 14px;
+}
+.form-control:focus {
+  border-color: var(--sakura-mid);
+  box-shadow: 0 0 0 0.2rem rgba(244, 166, 188, 0.25);
+}
+label { font-weight: 600; color: var(--sakura-dark); font-size: 0.9rem; }
+
+/* ---------- Tables ---------- */
+.table thead.table-primary th,
+.table > :not(caption) > * > th.table-primary {
+  background: var(--sakura-light) !important;
+  color: var(--sakura-dark) !important;
+  border-color: var(--line-soft) !important;
+}
+.table td, .table th { vertical-align: middle; border-color: var(--line-soft) !important; }
+
+.badge-umum {
+  background: var(--sakura-light);
+  color: var(--sakura-dark);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-prioritas {
+  background: var(--sakura-gold);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-status-menunggu { color: var(--sakura-dark); font-weight: 600; }
+.badge-status-dipanggil {
+  background: var(--sakura-deep);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ---------- Alerts ---------- */
+.alert-sakura-error {
+  background: #FBE7EC;
+  color: #A02B4C;
+  border: 1px solid #F3C4D2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+}
+.alert-sakura-success {
+  background: #EAF3E9;
+  color: var(--sakura-sage-dark);
+  border: 1px solid #CFE3CC;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+}
+
+/* ---------- Hero section ---------- */
+.hero-sakura {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 32px 32px;
+}
+.hero-branch {
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 320px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.hero-branch.flip {
+  right: auto;
+  left: -30px;
+  transform: scaleX(-1);
+  top: auto;
+  bottom: -30px;
+  opacity: 0.6;
+}
+
+/* ---------- Feature cards on landing ---------- */
+.feature-icon {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+/* ---------- Auth pages ---------- */
+.auth-wrapper {
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+}
+.auth-card { position: relative; overflow: hidden; }
+.auth-card .corner-petal {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 140px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ---------- Dashboard queue number ---------- */
+.queue-number-box {
+  background: linear-gradient(135deg, var(--sakura-deep), var(--sakura-dark));
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+}
+.queue-number-box h1 { color: #fff; font-size: 3rem; margin: 0; }
+.queue-number-box h6 { color: rgba(255,255,255,0.85); }
+
+footer {
+  color: var(--sakura-dark);
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   Kelopak sakura berjatuhan (dekoratif)
+   ============================================ */
+#sakura-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+.petal {
+  position: absolute;
+  top: -20px;
+  width: 14px;
+  height: 14px;
+  background: var(--sakura-mid);
+  opacity: 0.85;
+  border-radius: 150% 0 150% 0;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+@keyframes fall {
+  from { top: -20px; }
+  to { top: 110%; }
+}
+@keyframes sway {
+  0%, 100% { margin-left: 0; }
+  50% { margin-left: 40px; }
+}
+
+@media (max-width: 576px) {
+  .hero-branch { width: 200px; }
+  .queue-number-box h1 { font-size: 2.2rem; }
+}
+
+/* ============================================
+   Tambahan: Poli, Statistik Admin, Riwayat, Profil
+   ============================================ */
+
+.badge-poli {
+  background: #fff;
+  color: var(--sakura-dark);
+  border: 1.5px solid var(--sakura-mid);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-status-selesai {
+  background: var(--sakura-sage);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-status-batal {
+  background: #E9E4E6;
+  color: var(--sakura-ink);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Pilihan poli saat ambil antrean */
+.poli-option {
+  border: 1.5px solid var(--line-soft);
+  border-radius: 12px;
+  padding: 8px 12px;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--sakura-ink);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.poli-option:hover { border-color: var(--sakura-mid); background: var(--sakura-pale); }
+.poli-option input[type="radio"] { accent-color: var(--sakura-deep); }
+
+/* Kartu statistik dashboard admin */
+.stat-card .stat-icon {
+  font-size: 1.4rem;
+  color: var(--sakura-deep);
+  margin-bottom: 4px;
+}
+.stat-card h3 { color: var(--sakura-dark); }
+
+.poli-stat-card {
+  border-left: 4px solid var(--sakura-mid) !important;
+}
+
+/* ---------- Papan Antrian Publik (Display Board) ---------- */
+.display-card {
+  border-top: 5px solid var(--sakura-deep) !important;
+}
+.display-poli-label {
+  color: var(--sakura-dark);
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+}
+.display-nomor-wrap {
+  min-height: 110px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.display-nomor {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 4.2rem;
+  line-height: 1;
+  color: var(--sakura-deep);
+  background: var(--sakura-pale);
+  border: 2px solid var(--sakura-light);
+  border-radius: 16px;
+  padding: 8px 26px;
+}
+.display-nomor-kosong {
+  color: var(--line-soft);
+  background: transparent;
+  border-style: dashed;
+}
+.display-menunggu {
+  color: var(--sakura-ink);
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+.display-flash {
+  animation: flashSoroti 1.4s ease-in-out 2;
+}
+@keyframes flashSoroti {
+  0%, 100% { box-shadow: 0 0 0 rgba(232, 116, 143, 0); transform: scale(1); }
+  50% { box-shadow: 0 0 24px rgba(232, 116, 143, 0.55); transform: scale(1.06); }
+}
+
+@media (max-width: 576px) {
+  .display-nomor { font-size: 2.8rem; padding: 6px 18px; }
+}
