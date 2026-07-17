@@ -6,76 +6,51 @@ Website sistem antrian klinik dengan tema pink sakura. Dibangun dengan Node.js, 
 
 
 👥 Anggota Kelompok 4
-
-NamaNIMArya Bayu Kelana240511055Valent Ichsanul Fitri240511105Najwa Pinasti240511153Fajrur Robi Sya'bani240511202Dika Arya Saputra240511005
+1. Arya Bayu Kelana(240511055)
+2. Valent Ichsanul Fitri(240511105)
+3. Najwa Pinasti(240511153)
+4. Fajrur Robi Sya'bani(240511202)
+5. Dika Arya Saputra(240511005)
 
 
 ✨ Fitur
 
 Untuk Pasien
-
-
-Landing page dengan hero section & dekorasi dahan sakura
-Register & Login (password di-hash dengan bcryptjs)
-Ambil nomor antrean online dengan kategori Umum / Prioritas (lansia & darurat)
-Multi poli/layanan: Poli Umum, Poli Gigi, Poli Anak, Poli KIA — masing-masing punya penomoran antrean sendiri
-Estimasi waktu tunggu otomatis berdasarkan posisi antrian di poli yang sama
-Dashboard dengan status real-time (auto-refresh)
-Batalkan antrean sendiri selama masih berstatus Menunggu
-Riwayat kunjungan (selesai / dilewati / dibatalkan)
-Notifikasi otomatis (bunyi chime + browser notification) saat nomor dipanggil
-Edit profil (ubah nama & ganti password)
-
+-Landing page dengan hero section & dekorasi dahan sakura
+-Register & Login (password di-hash dengan bcryptjs)
+-Ambil nomor antrean online dengan kategori Umum / Prioritas (lansia & darurat)
+-Multi poli/layanan: Poli Umum, Poli Gigi, Poli Anak, Poli KIA — masing-masing punya penomoran antrean sendiri
+-Estimasi waktu tunggu otomatis berdasarkan posisi antrian di poli yang sama
+-Dashboard dengan status real-time (auto-refresh)
+-Batalkan antrean sendiri selama masih berstatus Menunggu
+-Riwayat kunjungan (selesai / dilewati / dibatalkan)
+-Notifikasi otomatis (bunyi chime + browser notification) saat nomor dipanggil
+-Edit profil (ubah nama & ganti password)
 
 Untuk Admin / Petugas
-
-
-Dashboard untuk memanggil, menandai selesai, atau melewati nomor antrian — dengan filter per poli
-Statistik lengkap: jumlah menunggu, dipanggil, selesai, dilewati/dibatalkan hari ini, serta breakdown per poli
-Riwayat & Export CSV dengan filter tanggal/status/poli
-
+-Dashboard untuk memanggil, menandai selesai, atau melewati nomor antrian — dengan filter per poli
+-Statistik lengkap: jumlah menunggu, dipanggil, selesai, dilewati/dibatalkan hari ini, serta breakdown per poli
+-Riwayat & Export CSV dengan filter tanggal/status/poli
 
 Umum
-
-
-Papan Antrian Publik (/display, tanpa login) untuk layar TV ruang tunggu — update otomatis + animasi & bunyi saat ada panggilan baru
-Animasi kelopak sakura berjatuhan di seluruh halaman 🌸
-
+-Papan Antrian Publik (/display, tanpa login) untuk layar TV ruang tunggu — update otomatis + animasi & bunyi saat ada panggilan baru
+-Animasi kelopak sakura berjatuhan di seluruh halaman 🌸
 
 
 🚀 Cara Menjalankan
-
-
-Pastikan Node.js versi 22 ke atas sudah terinstall (cek dengan node --version)
-Buka folder proyek ini di terminal, lalu install dependencies:
-
-
+1. Pastikan Node.js versi 22 ke atas sudah terinstall (cek dengan node --version)
+2. Buka folder proyek ini di terminal, lalu install dependencies:
 bash   npm install
-
 (Cuma butuh beberapa detik — semua dependency pure JavaScript, tidak ada yang perlu di-compile)
 3. Jalankan server:
-
 bash   npm start
-
 Atau bisa juga langsung:
-
 bash   node app.js
-
-
-Buka browser ke http://localhost:3000
-
-
-
+4. Buka browser ke http://localhost:3000
 Database SQLite (queuecare.db) akan otomatis dibuat saat pertama kali dijalankan, lengkap dengan tabel dan 1 akun admin default. Kalau muncul warning ExperimentalWarning: SQLite is an experimental feature, itu normal dan aman diabaikan — bukan error.
 
-
-
-
 🔑 Akun Demo
-
 RoleEmailPasswordAdminadmin@queuecare.comadmin123Pasiendaftar sendiri lewat halaman Register—
-
-
 📁 Struktur Folder
 
 ├── app.js                     # Entry point & routing utama
@@ -110,11 +85,9 @@ RoleEmailPasswordAdminadmin@queuecare.comadmin123Pasiendaftar sendiri lewat hala
 
 
 📝 Catatan 
-
-
-Kategori prioritas: pasien lansia/darurat otomatis didahulukan dalam antrian, sesuai hasil studi kasus yang ditemukan di berbagai puskesmas.
-Estimasi waktu tunggu: dihitung dari jumlah pasien di depan (di poli yang sama) × rata-rata waktu layanan (asumsi 10 menit/pasien, bisa disesuaikan di controllers/pasienController.js).
-Multi poli: setiap poli (Umum/Gigi/Anak/KIA) memiliki penomoran antrean & jalur estimasi terpisah, mendekati alur kerja klinik nyata yang punya beberapa ruang periksa sekaligus. Daftar poli bisa ditambah/diubah di database/database.js (objek DAFTAR_POLI).
-Papan Antrian Publik (/display) cocok dibuka di layar/TV ruang tunggu — tidak perlu login, update otomatis tiap 4 detik lewat polling AJAX ke /display/data, disertai animasi flash & bunyi chime saat ada nomor baru dipanggil.
-Riwayat & Export CSV di admin (/admin/riwayat) berguna untuk laporan rekap harian/bulanan pelayanan klinik.
-Untuk demo/presentasi, buka 3 tab browser berbeda: satu sebagai pasien, satu login sebagai admin, dan satu lagi ke /display sebagai papan antrian — supaya alur ambil nomor → dipanggil → selesai bisa didemokan secara langsung dan terlihat di ketiga layar.
+- Kategori prioritas: pasien lansia/darurat otomatis didahulukan dalam antrian, sesuai hasil studi kasus yang ditemukan di berbagai puskesmas.
+- Estimasi waktu tunggu: dihitung dari jumlah pasien di depan (di poli yang sama) × rata-rata waktu layanan (asumsi 10 menit/pasien, bisa disesuaikan di controllers/pasienController.js).
+- Multi poli: setiap poli (Umum/Gigi/Anak/KIA) memiliki penomoran antrean & jalur estimasi terpisah, mendekati alur kerja klinik nyata yang punya beberapa ruang periksa sekaligus. Daftar poli bisa ditambah/diubah di database/database.js (objek DAFTAR_POLI).
+- Papan Antrian Publik (/display) cocok dibuka di layar/TV ruang tunggu — tidak perlu login, update otomatis tiap 4 detik lewat polling AJAX ke /display/data, disertai animasi flash & bunyi chime saat ada nomor baru dipanggil.
+- Riwayat & Export CSV di admin (/admin/riwayat) berguna untuk laporan rekap harian/bulanan pelayanan klinik.
+- Untuk demo/presentasi, buka 3 tab browser berbeda: satu sebagai pasien, satu login sebagai admin, dan satu lagi ke /display sebagai papan antrian — supaya alur ambil nomor → dipanggil → selesai bisa didemokan secara langsung dan terlihat di ketiga layar.
