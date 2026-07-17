@@ -46,12 +46,16 @@ Website sistem antrian klinik dengan tema **pink sakura**. Dibangun dengan Node.
 ## 🚀 Cara Menjalankan
 
 1. Pastikan **Node.js versi 22 ke atas** sudah terinstall (cek dengan `node --version`)
-2. Buka folder proyek ini di terminal, lalu install dependencies:
+2. Buka folder proyek ini di terminal,lalu masukan
+      ```bash
+  cd queuecare-siak-kelompok4-main
+   ```
+3. lalu install dependencies:
    ```bash
    npm install
    ```
    *(Cuma butuh beberapa detik — semua dependency pure JavaScript, tidak ada yang perlu di-compile)*
-3. Jalankan server:
+4. Jalankan server:
    ```bash
    npm start
    ```
@@ -59,7 +63,7 @@ Website sistem antrian klinik dengan tema **pink sakura**. Dibangun dengan Node.
    ```bash
    node app.js
    ```
-4. Buka browser ke [http://localhost:3000](http://localhost:3000)
+5. Buka browser ke [http://localhost:3000](http://localhost:3000)
 
 > Database SQLite (`queuecare.db`) akan otomatis dibuat saat pertama kali dijalankan, lengkap dengan tabel dan 1 akun admin default. Kalau muncul warning `ExperimentalWarning: SQLite is an experimental feature`, itu normal dan aman diabaikan — bukan error.
 
